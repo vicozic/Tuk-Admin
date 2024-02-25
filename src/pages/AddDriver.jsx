@@ -15,6 +15,7 @@ const addDriver = () => {
   const [address, setAddress] = useState();
   const [NRC, setNRC] = useState();
   const [licenseNo, setLicenseNo] = useState();
+  const [profile, setProfile] = useState();
   const navigate = useNavigate();
 
   const createDriver = async () => {
@@ -25,7 +26,8 @@ const addDriver = () => {
       phoneNumber &&
       address &&
       NRC &&
-      licenseNo
+      licenseNo &&
+      profile
     ) {
       const data = {
         name,
@@ -35,6 +37,7 @@ const addDriver = () => {
         address,
         NRC,
         licenseNo,
+        profile,
       };
       await admin
         .post("/drivers", data)
@@ -65,6 +68,12 @@ const addDriver = () => {
           });
         });
     }
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+    setProfile(base64);
   };
 
   return (
@@ -229,6 +238,20 @@ const addDriver = () => {
               />
             </div>
           </div>
+          <div className="sm:col-span-2">
+            <label className="block text-sm font-semibold leading-6 text-gray-900">
+              Profile Photo :
+            </label>
+            <div className="mt-2.5">
+              <input
+                type="file"
+                required={true}
+                tabIndex="1"
+                onChange={handleFileUpload}
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
         </div>
         <div className="mt-10">
           <button
@@ -245,3 +268,16 @@ const addDriver = () => {
 };
 
 export default addDriver;
+
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
