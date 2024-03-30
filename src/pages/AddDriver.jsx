@@ -95,12 +95,7 @@ const addDriver = () => {
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Registeration
         </h2>
-        <p className="mt-2 text-lg leading-8 text-gray-600 max-[425px]:text-sm">
-          Create a driver account and password by adding the information
-          completely.For both username and password, please reuse the driver's
-          name with lowercase without space. So, later in driver app, the driver
-          can change the password himself.
-        </p>
+     
       </div>
       <form className="mx-auto mt-16 max-w-xl sm:mt-20">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -176,7 +171,7 @@ const addDriver = () => {
                 pattern="[0-9]{9}"
                 title="number only"
                 onChange={(e) => {
-                  setPhoneNumber(e.target.value);
+                  setPhoneNumber("09"+e.target.value);
                 }}
                 className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
